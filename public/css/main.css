@@ -1,0 +1,32 @@
+* {
+  padding: 0;
+  margin: 0; }
+
+.thumbnail img {
+  max-height: 150px; }
+
+.thumbnail h3 {
+  color: #353535; }
+
+.description {
+  color: #7f7f7f; }
+
+.price {
+  font-weight: bold;
+  font-size: 16px; }
+
+.btn-primary {
+  background-color: #7befb2;
+  border-color: #7befb2;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+  letter-spacing: 0.6px;
+  outline: none; }
+  .btn-primary:hover {
+    background-color: #353535;
+    border-color: #353535; }
+  .btn-primary:active {
+    background-color: #7befb2; }
+  .btn-primary:focus {
+    background-color: #353535;
+    border-color: #353535; }
