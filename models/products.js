@@ -1,4 +1,4 @@
-const mongoose = reqiure('mongoose');
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
@@ -8,4 +8,4 @@ const schema = new Schema({
   price:        {type: Number, required: true},
 })
 
-module.exports = mongoose.model('Product', schema); 
+module.exports = mongoose.model('Product', schema);

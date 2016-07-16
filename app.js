@@ -5,7 +5,7 @@ const logger        = require('morgan');
 const cookieParser  = require('cookie-parser');
 const bodyParser    = require('body-parser');
 const mongoose      = require('mongoose');
-
+const session       = require('express-session');
 
 // Require Routes
 const IndexRoute = require('./routes/index');
@@ -26,6 +26,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+    secret: 'practicalchicken', 
+    resave: false, 
+    saveUninitialized: false
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', IndexRoute);

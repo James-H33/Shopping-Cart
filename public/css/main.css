@@ -6,7 +6,8 @@
   max-height: 150px; }
 
 .thumbnail h3 {
-  color: #353535; }
+  color: #353535;
+  letter-spacing: 0.5px; }
 
 .description {
   color: #7f7f7f; }
@@ -20,7 +21,7 @@
   border-color: #7befb2;
   -webkit-transition: all 300ms ease-in-out;
   transition: all 300ms ease-in-out;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   outline: none; }
   .btn-primary:hover {
     background-color: #353535;
