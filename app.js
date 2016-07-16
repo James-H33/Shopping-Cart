@@ -6,6 +6,8 @@ const cookieParser  = require('cookie-parser');
 const bodyParser    = require('body-parser');
 const mongoose      = require('mongoose');
 const session       = require('express-session');
+const passport      = require('passport');
+const flash         = require('connect-flash');
 
 // Require Routes
 const IndexRoute = require('./routes/index');
@@ -13,6 +15,7 @@ const IndexRoute = require('./routes/index');
 const app = express();
 
 mongoose.connect('mongodb://localhost/shopping_cart');
+require('./config/passport'); // runs the passport.js configuration
 
 // Ports
 const port = process.env.PORT || 3000;
@@ -22,6 +25,7 @@ const portIP = process.env.IP;
 // view engine setup
 app.set('view engine', 'ejs');
 
+// ORDER DOES MATTER
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,6 +35,9 @@ app.use(session({
     resave: false, 
     saveUninitialized: false
 }));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', IndexRoute);
