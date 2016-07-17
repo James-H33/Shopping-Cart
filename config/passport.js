@@ -14,20 +14,36 @@ passport.deserializeUser(function(id, done) {
     })
 });
 
-// passport.use is a method of passport itself || Signup Strategy ||  User Creation
+
+// Signup Strategy ||  User Creation
 passport.use('local.signup', new LocalStrategy({
     usernameField: 'email', 
     passwordField: 'password', 
     passReqToCallback: true
   }, function(req, email, password, done) {
-      User.findOne({'email': email}, function(err, user) {
+
+    // Next lines are for email validation using express-validator package
+    req.checkBody('email', 'Invalid Email').notEmpty().isEmail();
+    req.checkBody('password', 'Invalid Password').notEmpty().isLength({min: 4});
+    let errors = req.validationErrors();
+
+    if (errors) {
+      var messages = [];
+      errors.forEach(function(error) {
+        messages.push(error.msg);
+      });
+
+      return done(null, false, req.flash('error', messages));
+    } // validation end
+
+    User.findOne({'email': email}, function(err, user) {
 
           if (err) {
             return done(err);
           } 
 
           if (user) {
-            done(null, false, {message: "This Email is already in use."});
+            return done(null, false, {message: "This Email is already in use."});
             // null = no error appeared
             // but it's also not successful. So false = not success
           }
@@ -41,5 +57,46 @@ passport.use('local.signup', new LocalStrategy({
             } 
             return done(null, newUser);
           });
+      });
+}));
+
+// Signin Strategy
+passport.use('local.signin', new LocalStrategy({
+    usernameField: 'email', 
+    passwordField: 'password', 
+    passReqToCallback: true
+}, function(req, email, password, done) {
+  
+    // Next lines are for email validation using express-validator package
+    req.checkBody('email', 'Invalid Email').notEmpty().isEmail();
+    req.checkBody('password', 'Invalid Password').notEmpty();
+    let errors = req.validationErrors();
+
+    if (errors) {
+      var messages = [];
+      errors.forEach(function(error) {
+        messages.push(error.msg);
+      });
+
+      return done(null, false, req.flash('error', messages));
+    } // validation end
+
+    User.findOne({'email': email}, function(err, user) {
+
+          if (err) {
+            return done(err);
+          } 
+
+          if (!user) {
+            return done(null, false, {message: "No user found."});
+            // null = no error appeared
+            // but it's also not successful. So false = not success
+          }
+
+          if (!user.validPassword(password)){
+            return done(null, false, {message: "Wrong Password"});
+          }
+
+         return done(null, user);
       });
 }));
