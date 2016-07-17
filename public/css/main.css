@@ -2,6 +2,10 @@
   padding: 0;
   margin: 0; }
 
+.navbar-default .navbar-brand {
+  color: #353535;
+  font-weight: bold; }
+
 .thumbnail img {
   max-height: 150px; }
 

@@ -9,7 +9,7 @@ const session       = require('express-session');
 const passport      = require('passport');
 const flash         = require('connect-flash');
 const validator     = require('express-validator');
-
+const MongoStore    = require('connect-mongo')(session); // Must go below session
 
 
 // Require Routes
@@ -38,15 +38,21 @@ app.use(cookieParser());
 app.use(session({
     secret: 'practicalchicken', 
     resave: false, 
-    saveUninitialized: false
+    saveUninitialized: false, 
+    store: new MongoStore({mongooseConnection: mongoose.connection}), // Tells store not to open a new connection
+    cookie: { maxAge: 180 * 60 * 1000 }
 }));
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// res.locals.something are global variables withing the application
 app.use(function(req, res, next) {
     res.locals.login = req.isAuthenticated(); // This will be either true or false
+    res.locals.session = req.session;
     next();
 });
 
