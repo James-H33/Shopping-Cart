@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css" media="screen" title="no title" charset="utf-8">
+    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
     <title>Node Shopping</title>
   </head>
   <body>
@@ -27,7 +28,12 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart</a></li>
+        <li>
+          <a href="/shopping-cart"> 
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
+            <span class="badge"><%= session.cart.totalQty %></span>
+          </a>
+        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-user" aria-hidden="true"></i> User Management <span class="caret"></span></a>
           <ul class="dropdown-menu">
